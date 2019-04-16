@@ -34,29 +34,16 @@ void	print_trace(int	nb)
 	exit(1);
 }
 
-size_t	ft_mem_padding(size_t size)
-{
-	size_t ret;
-
-	ret = 0;
-	while (ret < size)
-		ret += 16;
-	return (ret);
-}
-
 void	*malloc(size_t size)
 {
 	void	*ret;
 
 	// for (int i = 0; i < 18; ++i)
-		// signal(i, &print_trace);
+	// 	signal(i, &print_trace);
 	ret = NULL;
 	if (!g_mem)
 		init_glob();
-	// size = ft_mem_padding(size);
 	size = align_number(size, 16);
-	// if (g_mem->debug)
-		// return (mmap(0, size, PROT, FLAGS, -1, 0));
 	if (size <= 0 || size >= SIZE_MAX)
 		return (NULL);
 	else if (size <= TINY_SIZE)
@@ -67,8 +54,8 @@ void	*malloc(size_t size)
 		ret = alloc_large(size);
 	if (ret == MAP_FAILED)
 		return (NULL);
-	// ft_putstr("+ ");
-	// ft_print_mem(ret);
-	// ft_putchar('\n');
+	ft_putstr("+ ");
+	ft_print_mem(ret);
+	ft_putchar('\n');
 	return (ret);
 }

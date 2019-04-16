@@ -6,7 +6,8 @@ NAME = libft_malloc_$(HOSTTYPE).so
 
 SYMLINK = libft_malloc.so
 
-SRC_FILES = malloc.c alloc.c tools.c free.c calloc.c realloc.c show_alloc_mem.c align.c
+SRC_FILES = malloc.c alloc_zone.c tools.c free.c calloc.c realloc.c show_alloc_mem.c align.c \
+alloc_small.c alloc_tiny.c alloc_large.c
 
 SRC_PATH = srcs/
 

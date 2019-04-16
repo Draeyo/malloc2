@@ -26,8 +26,8 @@
 // # define TINY_SIZE		(size_t) PAGE_SIZE * 2
 // # define SMALL_SIZE		(size_t) PAGE_SIZE * 16
 
-# define TINY_ZONE_SIZE		(size_t)((TINY_SIZE + INFO_SIZE) * 100) + sizeof(t_zone)
-# define SMALL_ZONE_SIZE	(size_t)((SMALL_SIZE + INFO_SIZE) * 100) + sizeof(t_zone)
+# define TINY_ZONE_SIZE		(size_t)(((TINY_SIZE + INFO_SIZE) * 100) + sizeof(t_zone))
+# define SMALL_ZONE_SIZE	(size_t)(((SMALL_SIZE + INFO_SIZE) * 100) + sizeof(t_zone))
 
 # define TINY_TYPE		1
 # define SMALL_TYPE		2
@@ -76,6 +76,8 @@ extern t_overall		*g_mem;
 
  size_t	ft_mem_padding(size_t size);
 
+ t_zone	*alloc_zone(size_t size);
+
  void	*alloc_tiny(size_t size);
  void	*alloc_small(size_t size);
  void	*alloc_large(size_t size);
@@ -84,6 +86,6 @@ extern t_overall		*g_mem;
 
  void	*find_alloc(void *ptr);
 
- int	align_number(int input, int align);
+ size_t	align_number(size_t input, size_t align);
 
 #endif

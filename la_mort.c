@@ -929,7 +929,7 @@ int main(void)
 {
     size_t len;
     srand(time(0));
-    for (int i = 0; i < 200000; ++i)
+    for (int i = 0; i < 5000; ++i)
     {
         len = (rand() % (15000 + 1 - 1)) + 1;
         // ft_putstr("size : ");

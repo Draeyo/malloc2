@@ -1,12 +1,14 @@
-static int	is_power_of_two(int n)
+#include "malloc.h"
+
+static size_t	is_power_of_two(size_t n)
 {
 	return (n && (!(n & (n - 1))));
 }
 
-static int	find_position(int n)
+static ssize_t	find_position(size_t n)
 {
-	int i;
-	int pos;
+	size_t i;
+	ssize_t pos;
 
 	if (!is_power_of_two(n))
 		return (-1);
@@ -20,10 +22,10 @@ static int	find_position(int n)
 	return (pos);
 }
 
-int			align_number(int input, int align)
+size_t			align_number(size_t input, size_t align)
 {
-	int ret;
-	int pos;
+	size_t ret;
+	ssize_t pos;
 
 	pos = find_position(align) - 1;
 	if (pos < 0)

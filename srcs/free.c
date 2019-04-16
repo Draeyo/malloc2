@@ -26,24 +26,7 @@ static void		free_large(void *mem)
 		}
 		tmp = tmp->next;
 	}
-}	
-
-// void		switch_last(t_alloc *mem)
-// {
-// 	t_alloc		*tmp;
-
-// 	tmp = NULL;
-// 	if (mem == g_mem->tiny_last->last)
-// 	{
-// 		tmp = g_mem->tiny_last->last;
-// 		g_mem->tiny_last->last = tmp->prev;
-// 	}
-// 	else if (mem == g_mem->small_last->last)
-// 	{
-// 		tmp = g_mem->small_last->last;
-// 		g_mem->small_last->last = tmp->prev;
-// 	}
-// }
+}
 
 void		free(void *ptr)
 {
@@ -52,6 +35,9 @@ void		free(void *ptr)
 
 	tmp = NULL;
 	zone = NULL;
+	ft_putstr("- ");
+	ft_print_mem(ptr);
+	ft_putchar('\n');
 	if (!ptr)
 		return ;
 	tmp = find_alloc(ptr);

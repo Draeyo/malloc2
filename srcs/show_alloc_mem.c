@@ -30,9 +30,11 @@ static int		print_mem(t_zone *zone, char *type)
 	{
 		ft_putstr(type);
 		print_memory((void*)zone);
+		ft_putstr(" -- next -> ");
+		print_memory((void*)zone->next);
 		ft_putchar('\n');
 		mem = zone ? (void*)zone + sizeof(t_zone) : NULL;
-		while (mem && mem->next)
+		while (mem)
 		{
 			if (!mem->free)
 			{
