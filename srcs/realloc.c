@@ -41,7 +41,7 @@ static void		*re_alloc(void *ptr, size_t size)
 		ret = malloc(size);
 		if (ret != NULL)
 		{
-			ft_memmove(ret, tmp->data, tmp->size);
+			memmove(ret, tmp->data, tmp->size);
 			tmp->free = 1;
 		}
 		return (ret);
@@ -57,18 +57,18 @@ void			*realloc(void *ptr, size_t size)
 
 	ret = NULL;
 	size = align_number(size, 16);
-	ft_putstr("IN R> ");
-	ft_print_mem(ptr);
-	ft_putchar('\n');
+//	ft_putstr("IN R> ");
+//	ft_print_mem(ptr);
+//	ft_putchar('\n');
 	if ((ret = re_alloc(ptr, size)) == NULL)
 	{
-		ft_putstr("OUT R> ");
-		ft_print_mem(ptr);
-		ft_putchar('\n');
+//		ft_putstr("OUT R> ");
+//		ft_print_mem(ptr);
+//		ft_putchar('\n');
 		return (ptr);
 	}
-	ft_putstr("OUT R> ");
-	ft_print_mem(ret);
-	ft_putchar('\n');
+//	ft_putstr("OUT R> ");
+//	ft_print_mem(ret);
+//	ft_putchar('\n');
 	return (ret);
 }

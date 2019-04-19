@@ -7,7 +7,7 @@ t_overall *g_mem = NULL;
 static void		init_glob()
 {
 	g_mem = mmap(0, PAGE_SIZE, PROT, FLAGS, -1, 0);
-	ft_bzero(g_mem, sizeof(t_overall));
+	bzero(g_mem, sizeof(t_overall));
 }
 
 void	print_trace(int	nb)
@@ -56,6 +56,10 @@ void	*malloc(size_t size)
 		return (NULL);
 	ft_putstr("+ ");
 	ft_print_mem(ret);
+	ft_putstr(" -> ");
+	ft_print_mem(((t_alloc*)ret)->master);
+	//ft_putstr(" -> ");
+	//ft_print_mem(((t_zone*)((t_alloc*)ret)->master)->end);
 	ft_putchar('\n');
 	return (ret);
 }

@@ -12,7 +12,7 @@ static void		*alloc_mem_small(size_t size)
 		new = (void*)last + sizeof(t_alloc) + last->size;
 	else
 		new = (void*)last;
-	ft_bzero(new, sizeof(t_alloc));
+	bzero(new, sizeof(t_alloc));
 	new->size = size;
 	new->data = (void*)new + sizeof(t_alloc);
 	new->prev = g_mem->small_last->last ? g_mem->small_last->last : NULL;
@@ -20,7 +20,7 @@ static void		*alloc_mem_small(size_t size)
 	if (g_mem->small_last->last)
 		((t_alloc*)g_mem->small_last->last)->next = new;
 	g_mem->small_last->size -= (size + sizeof(t_alloc));
-	g_mem->small_last->last = (void*)new;
+	g_mem->small_last->last = new;
 	return (new);
 }
 
@@ -37,18 +37,10 @@ void	*alloc_small(size_t size)
 	}
 	last = g_mem->small_last->last ? g_mem->small_last->last : g_mem->small_last->start;
 	if ((new_small = eco_alloc(size, 1)) != NULL)
-	{
-		ft_putstr("EKOLOL > ");
 		return (new_small->data);
-	}
 	// verifier plutot si il reste de la place dans une des zones
-	if ((void*)last + sizeof(t_alloc) + last->size > ((void*)g_mem->small_last->end - (size + sizeof(t_alloc))))
+	if ((void*)last + sizeof(t_alloc) + last->size > (void*)g_mem->small_last->end)
 	{
-		// ft_putstr("LEFT : ");
-		// ft_putnbr(g_mem->small_last->size);
-		// ft_putstr(" bytes for :");
-		// ft_putnbr(size);
-		// ft_putstr(" asked\n");
 		((t_zone*)g_mem->small_last)->next = (t_zone*)alloc_zone(SMALL_ZONE_SIZE);
 		g_mem->small_last = ((t_zone*)g_mem->small_last)->next;
 	}

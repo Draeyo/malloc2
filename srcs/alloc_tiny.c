@@ -12,15 +12,15 @@ static void		*alloc_mem_tiny(size_t size)
 		new = (void*)last + sizeof(t_alloc) + last->size;
 	else
 		new = (void*)last;
-	ft_bzero(new, sizeof(t_alloc));
+	bzero(new, sizeof(t_alloc));
 	new->size = size;
 	new->data = (void*)new + sizeof(t_alloc);
 	new->prev = g_mem->tiny_last->last ? g_mem->tiny_last->last : NULL;
 	new->master = g_mem->tiny_last;
 	if (g_mem->tiny_last->last)
-		((t_alloc*)g_mem->tiny_last->last)->next = (void*)new;
+		((t_alloc*)g_mem->tiny_last->last)->next = new;
 	g_mem->tiny_last->size -= (size + sizeof(t_alloc));
-	g_mem->tiny_last->last = (void*)new;
+	g_mem->tiny_last->last = new;
 	return (new);
 }
 
@@ -37,12 +37,9 @@ void			*alloc_tiny(size_t size)
 	}
 	last = g_mem->tiny_last->last ? g_mem->tiny_last->last : g_mem->tiny_last->start;
 	if ((new_tiny = eco_alloc(size, 0)) != NULL)
-	{
-		ft_putstr("Next one is from EKOLOL > ");
 		return (new_tiny->data);
-	}
 	// verifier plutot si il reste de la place dans une des zones
-	if ((void*)last + sizeof(t_alloc) + last->size > ((void*)g_mem->tiny_last->end - (size + sizeof(t_alloc))))
+	if ((void*)last + sizeof(t_alloc) + last->size > (void*)g_mem->tiny_last->end)
 	{
 		((t_zone*)g_mem->tiny_last)->next = (t_zone*)alloc_zone(TINY_ZONE_SIZE);
 		g_mem->tiny_last = ((t_zone*)g_mem->tiny_last)->next;

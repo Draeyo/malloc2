@@ -21,7 +21,8 @@ static void		free_large(void *mem)
 				g_mem->large_last->last = (void*)tmp + sizeof(t_zone);
 			}
 			tmp->next = tmp->next->next;
-			munmap(tmp->next, tmp_mem->size);
+			if (munmap(tmp->next, tmp_mem->size))
+				ft_putendl_fd("Can't unmap memory zone", 2);
 			return ;
 		}
 		tmp = tmp->next;
@@ -35,9 +36,9 @@ void		free(void *ptr)
 
 	tmp = NULL;
 	zone = NULL;
-	ft_putstr("- ");
-	ft_print_mem(ptr);
-	ft_putchar('\n');
+//	ft_putstr("- ");
+//	ft_print_mem(ptr);
+//	ft_putchar('\n');
 	if (!ptr)
 		return ;
 	tmp = find_alloc(ptr);

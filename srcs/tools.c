@@ -14,16 +14,16 @@ static void		*find_large(void *ptr)
 	return (NULL);
 }
 
-static void		*find_by_type(t_zone *zone, size_t max_size, void *ptr)
+static void		*find_by_type(t_zone *zone, void *ptr)
 {
 	t_zone 		*tmp_zone;
-	t_alloc		*mem;
+	//t_alloc		*mem;
 
 	tmp_zone = zone;
-	mem = NULL;
+//	mem = NULL;
 	while (tmp_zone)
 	{
-		if ((void*)ptr > (void*)tmp_zone && (void*)ptr < ((void*)tmp_zone + max_size))
+		if ((void*)ptr > (void*)tmp_zone && (void*)ptr < (void*)tmp_zone->end)
 		{
 			return ((void*)ptr - sizeof(t_alloc));
 		// 	mem = tmp_zone->start;
@@ -34,10 +34,10 @@ static void		*find_by_type(t_zone *zone, size_t max_size, void *ptr)
 		// 		mem = mem->next;
 		// 	}
 		}
-		ft_print_mem(tmp_zone);
-		ft_putchar('\n');
-		ft_print_mem(tmp_zone->next);
-		ft_putchar('\n');
+//		ft_print_mem(tmp_zone);
+//		ft_putchar('\n');
+//		ft_print_mem(tmp_zone->next);
+//		ft_putchar('\n');
 		tmp_zone = tmp_zone->next;
 	}
 	return (NULL);
@@ -48,9 +48,9 @@ void			*find_alloc(void *ptr)
 	void		*ret;
 
 	ret = NULL;
-	if ((ret = find_by_type(g_mem->tiny, TINY_ZONE_SIZE, ptr)) != NULL)
+	if ((ret = find_by_type(g_mem->tiny, ptr)) != NULL)
 		return (ret);
-	if ((ret = find_by_type(g_mem->small, SMALL_ZONE_SIZE, ptr)) != NULL)
+	if ((ret = find_by_type(g_mem->small, ptr)) != NULL)
 		return (ret);
 	if ((ret = find_large(ptr)) != NULL)
 		return (ret);
@@ -64,7 +64,7 @@ void		*eco_search(size_t size, size_t type)
 	t_alloc	*mem;
 
 	zone = !type ? g_mem->tiny : g_mem->small;
-	mem = NULL;
+//	mem = NULL;
 	while (zone)
 	{
 		if (zone->size > (size + sizeof(t_alloc)))
@@ -72,7 +72,7 @@ void		*eco_search(size_t size, size_t type)
 			mem = zone->start;
 			while (mem)
 			{
-				if (mem->data && mem->free && (mem->size >= size))
+				if (mem->free && (mem->size >= size))
 				{
 					mem->free = 0;
 					return (mem);
@@ -135,9 +135,11 @@ void	*eco_alloc(size_t size, size_t type)
 	void	*tmp;
 
 	tmp = NULL;
-	if (!type && size <= TINY_SIZE && g_mem->tiny && g_mem->tiny->last)
-		tmp = eco_search(size, 0);
-	else if (type && size <= SMALL_SIZE && g_mem->small && g_mem->small->last)
-		tmp = eco_search(size, 1);
+	if (!type && size <= TINY_SIZE && g_mem->tiny->last)
+		tmp = eco_search(size, type);
+	else if (type && size <= SMALL_SIZE && g_mem->small->last)
+		tmp = eco_search(size, type);
+//	if (tmp)
+//		((t_zone*)tmp->master)->size -= tmp->size + sizeof(t_alloc);
 	return (tmp);
 }
