@@ -26,12 +26,14 @@ void	*alloc_large(size_t size)
 	new_large = NULL;
 	if (!g_mem->large)
 	{
-		g_mem->large = alloc_zone(size + sizeof(t_alloc) + sizeof(t_zone));
+		if (!(g_mem->large = alloc_zone(size + sizeof(t_alloc) + sizeof(t_zone))))
+			return (NULL);
 		g_mem->large_last = g_mem->large;
 	}
 	else
 	{
-		g_mem->large_last->next = alloc_zone(size + sizeof(t_alloc) + sizeof(t_zone));
+		if (!(g_mem->large_last->next = alloc_zone(size + sizeof(t_alloc) + sizeof(t_zone))))
+			return (NULL);
 		g_mem->large_last = g_mem->large_last->next;
 	}
 	new_large = alloc_mem_large(size);

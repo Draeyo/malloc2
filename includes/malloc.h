@@ -23,9 +23,6 @@
 # define TINY_SIZE		(size_t) 976
 # define SMALL_SIZE		(size_t) 16336
 
-// # define TINY_SIZE		(size_t) PAGE_SIZE * 2
-// # define SMALL_SIZE		(size_t) PAGE_SIZE * 16
-
 # define TINY_ZONE_SIZE		(size_t)(((TINY_SIZE + INFO_SIZE) * 100) + sizeof(t_zone))
 # define SMALL_ZONE_SIZE	(size_t)(((SMALL_SIZE + INFO_SIZE) * 100) + sizeof(t_zone))
 

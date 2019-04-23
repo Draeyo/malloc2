@@ -24,13 +24,6 @@ static void		*re_alloc(void *ptr, size_t size)
 	tmp = find_alloc(ptr);
 	if (tmp == NULL || (tmp != NULL && tmp->free))
 	{
-		if (!tmp)
-		{
-			// show_alloc_mem();
-			ft_putstr("ret NULL\n");
-		}
-		if (tmp && tmp->free)
-			ft_putstr("already freed\n");
 		ft_putstr("ptr not found or already freed : ");
 		ft_print_mem(ptr);
 		ft_putchar('\n');
@@ -57,18 +50,7 @@ void			*realloc(void *ptr, size_t size)
 
 	ret = NULL;
 	size = align_number(size, 16);
-//	ft_putstr("IN R> ");
-//	ft_print_mem(ptr);
-//	ft_putchar('\n');
 	if ((ret = re_alloc(ptr, size)) == NULL)
-	{
-//		ft_putstr("OUT R> ");
-//		ft_print_mem(ptr);
-//		ft_putchar('\n');
 		return (ptr);
-	}
-//	ft_putstr("OUT R> ");
-//	ft_print_mem(ret);
-//	ft_putchar('\n');
 	return (ret);
 }

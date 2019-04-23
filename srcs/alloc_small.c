@@ -38,8 +38,7 @@ void	*alloc_small(size_t size)
 	last = g_mem->small_last->last ? g_mem->small_last->last : g_mem->small_last->start;
 	if ((new_small = eco_alloc(size, 1)) != NULL)
 		return (new_small->data);
-	// verifier plutot si il reste de la place dans une des zones
-	if ((void*)last + sizeof(t_alloc) + last->size > (void*)g_mem->small_last->end)
+	if (((void*)last->data + last->size + sizeof(t_alloc) + size) > (void*)g_mem->small_last->end)
 	{
 		((t_zone*)g_mem->small_last)->next = (t_zone*)alloc_zone(SMALL_ZONE_SIZE);
 		g_mem->small_last = ((t_zone*)g_mem->small_last)->next;

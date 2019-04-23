@@ -14,15 +14,17 @@ static void		free_large(void *mem)
 		tmp_mem = (void*)tmp->next + sizeof(t_zone);
 		if (mem == (void*)tmp_mem->data)
 		{
-			if (tmp == g_mem->large_last && tmp != g_mem->large)
-			{
-				// A VERIFIER
-				g_mem->large_last = tmp;
-				g_mem->large_last->last = (void*)tmp + sizeof(t_zone);
-			}
+			// if (tmp == g_mem->large_last && tmp != g_mem->large)
+			// {
+			// 	// A VERIFIER
+			// 	g_mem->large_last = tmp;
+			// 	g_mem->large_last->last = (void*)tmp + sizeof(t_zone);
+			// }
 			tmp->next = tmp->next->next;
 			if (munmap(tmp->next, tmp_mem->size))
 				ft_putendl_fd("Can't unmap memory zone", 2);
+			ft_print_mem(mem);
+			ft_putstr(" <- FREE LARGE\n");
 			return ;
 		}
 		tmp = tmp->next;
@@ -36,9 +38,6 @@ void		free(void *ptr)
 
 	tmp = NULL;
 	zone = NULL;
-//	ft_putstr("- ");
-//	ft_print_mem(ptr);
-//	ft_putchar('\n');
 	if (!ptr)
 		return ;
 	tmp = find_alloc(ptr);
