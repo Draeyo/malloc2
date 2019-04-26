@@ -1,18 +1,5 @@
 #include "malloc.h"
 
-static void		*find_large(void *ptr)
-{
-	t_zone 		*tmp;
-
-	tmp = g_mem->large;
-	while (tmp)
-	{
-		if (((t_alloc*)tmp->start)->data == ptr)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
 
 static void		*find_by_type(t_zone *zone, void *ptr)
 {
@@ -37,8 +24,22 @@ void			*find_alloc(void *ptr)
 		return (ret);
 	if ((ret = find_by_type(g_mem->small, ptr)) != NULL)
 		return (ret);
-	if ((ret = find_large(ptr)) != NULL)
-		return (ret);
+	// if ((ret = find_large(ptr)) != NULL)
+	// 	return (ret);
+	return (NULL);
+}
+
+void		*find_large(void *ptr)
+{
+	t_zone 		*tmp;
+
+	tmp = g_mem->large;
+	while (tmp)
+	{
+		if (((t_alloc*)tmp->start)->data == ptr)
+			return (tmp);
+		tmp = tmp->next;
+	}
 	return (NULL);
 }
 
@@ -79,6 +80,6 @@ void	*eco_alloc(size_t size, size_t type)
 	else if (type && size <= SMALL_SIZE && g_mem->small->last)
 		tmp = (t_alloc*)eco_search(size, type);
 	if (tmp)
-		((t_zone*)tmp->master)->size -= tmp->size + sizeof(t_alloc);
+		((t_zone*)tmp->master)->size -= (tmp->size + sizeof(t_alloc));
 	return ((void*)tmp);
 }
