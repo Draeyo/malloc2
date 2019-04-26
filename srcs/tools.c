@@ -71,14 +71,14 @@ void		*eco_search(size_t size, size_t type)
 
 void	*eco_alloc(size_t size, size_t type)
 {
-	void	*tmp;
+	t_alloc		*tmp;
 
 	tmp = NULL;
 	if (!type && size <= TINY_SIZE && g_mem->tiny->last)
-		tmp = eco_search(size, type);
+		tmp = (t_alloc*)eco_search(size, type);
 	else if (type && size <= SMALL_SIZE && g_mem->small->last)
-		tmp = eco_search(size, type);
-//	if (tmp)
-//		((t_zone*)tmp->master)->size -= tmp->size + sizeof(t_alloc);
-	return (tmp);
+		tmp = (t_alloc*)eco_search(size, type);
+	if (tmp)
+		((t_zone*)tmp->master)->size -= tmp->size + sizeof(t_alloc);
+	return ((void*)tmp);
 }
