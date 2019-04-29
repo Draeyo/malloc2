@@ -10,6 +10,7 @@ static void		*alloc_mem_large(size_t size)
 	bzero(new, sizeof(t_alloc));
 	new->size = size;
 	new->data = (void*)new + sizeof(t_alloc);
+	new->prev = g_mem->large_last->last ? g_mem->large_last->last : NULL;
 	new->master = g_mem->large_last;
 	g_mem->large_last->next_safe = NULL;
 	if (g_mem->large_last->last != NULL)
