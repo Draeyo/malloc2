@@ -83,6 +83,7 @@ extern t_overall		*g_mem;
 
  void	*find_alloc(void *ptr);
  void	*find_large(void *ptr);
+ void	*find_last_in_zone(void *zone);
 
  size_t	align_number(size_t input, size_t align);
 

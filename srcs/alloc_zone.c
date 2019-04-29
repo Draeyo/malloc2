@@ -10,7 +10,6 @@ t_zone	*alloc_zone(size_t size)
 		return (NULL);
 	bzero(new, (sizeof(t_zone) + sizeof(t_alloc)));
 	new->start = (void*)new + sizeof(t_zone);
-	//bzero(new->start, sizeof(t_alloc));
 	new->end = (void*)new + size;
 	new->last = NULL;
 	new->next_safe = (void*)new->start;

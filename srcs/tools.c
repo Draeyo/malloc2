@@ -43,6 +43,19 @@ void		*find_large(void *ptr)
 	return (NULL);
 }
 
+void		*find_last_in_zone(void *zone)
+{
+	t_alloc	*tmp;
+
+	tmp = (void*)zone + sizeof(t_zone);
+	while (tmp)
+	{
+		if (!tmp->next)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
 
 void		*eco_search(size_t size, size_t type)
 {
