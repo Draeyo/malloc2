@@ -1,9 +1,20 @@
-#include "malloc.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlistrat <vlistrat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/06 13:26:35 by vlistrat          #+#    #+#             */
+/*   Updated: 2019/05/06 13:28:40 by vlistrat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "malloc.h"
 
 static void		*find_by_type(t_zone *zone, void *ptr)
 {
-	t_zone 		*tmp_zone;
+	t_zone		*tmp_zone;
 
 	tmp_zone = zone;
 	while (tmp_zone)
@@ -24,14 +35,12 @@ void			*find_alloc(void *ptr)
 		return (ret);
 	if ((ret = find_by_type(g_mem->small, ptr)) != NULL)
 		return (ret);
-	// if ((ret = find_large(ptr)) != NULL)
-	// 	return (ret);
 	return (NULL);
 }
 
-void		*find_large(void *ptr)
+void			*find_large(void *ptr)
 {
-	t_zone 		*tmp;
+	t_zone		*tmp;
 
 	tmp = g_mem->large;
 	while (tmp)
@@ -43,7 +52,7 @@ void		*find_large(void *ptr)
 	return (NULL);
 }
 
-void		*find_last_in_zone(void *zone)
+void			*find_last_in_zone(void *zone)
 {
 	t_alloc	*tmp;
 
@@ -57,7 +66,7 @@ void		*find_last_in_zone(void *zone)
 	return (NULL);
 }
 
-void		*eco_search(size_t size, size_t type)
+void			*eco_search(size_t size, size_t type)
 {
 	t_zone	*zone;
 	t_alloc	*mem;
@@ -83,7 +92,7 @@ void		*eco_search(size_t size, size_t type)
 	return (NULL);
 }
 
-void	*eco_alloc(size_t size, size_t type)
+void			*eco_alloc(size_t size, size_t type)
 {
 	t_alloc		*tmp;
 

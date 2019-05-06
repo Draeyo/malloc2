@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   align.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlistrat <vlistrat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/06 13:13:06 by vlistrat          #+#    #+#             */
+/*   Updated: 2019/05/06 13:14:11 by vlistrat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
 
 static size_t	is_power_of_two(size_t n)
@@ -7,8 +19,8 @@ static size_t	is_power_of_two(size_t n)
 
 static ssize_t	find_position(size_t n)
 {
-	size_t i;
-	ssize_t pos;
+	size_t		i;
+	ssize_t		pos;
 
 	if (!is_power_of_two(n))
 		return (-1);
@@ -24,8 +36,8 @@ static ssize_t	find_position(size_t n)
 
 size_t			align_number(size_t input, size_t align)
 {
-	size_t ret;
-	ssize_t pos;
+	size_t		ret;
+	ssize_t		pos;
 
 	pos = find_position(align) - 1;
 	if (pos < 0)

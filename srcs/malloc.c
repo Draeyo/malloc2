@@ -1,18 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   malloc.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlistrat <vlistrat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/06 13:23:15 by vlistrat          #+#    #+#             */
+/*   Updated: 2019/05/06 13:24:01 by vlistrat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
-#include <signal.h>
-#include <execinfo.h>
 
 t_overall *g_mem = NULL;
 
-static void		init_glob()
+static void		init_glob(void)
 {
 	g_mem = mmap(0, PAGE_SIZE, PROT, FLAGS, -1, 0);
 	bzero(g_mem, sizeof(t_overall));
 }
 
-void	*malloc(size_t size)
+void			*malloc(size_t size)
 {
-	void	*ret;
+	void		*ret;
 
 	ret = NULL;
 	if (!g_mem)

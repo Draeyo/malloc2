@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   alloc_large.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlistrat <vlistrat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/06 13:14:26 by vlistrat          #+#    #+#             */
+/*   Updated: 2019/05/06 13:15:53 by vlistrat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
 
 static void		*alloc_mem_large(size_t size)
 {
-	t_alloc 	*new;
+	t_alloc		*new;
 
 	if (!g_mem->large_last)
 		return (NULL);
@@ -19,21 +31,22 @@ static void		*alloc_mem_large(size_t size)
 	return (new);
 }
 
-
-void	*alloc_large(size_t size)
+void			*alloc_large(size_t size)
 {
 	t_alloc		*new_large;
 
 	new_large = NULL;
 	if (!g_mem->large)
 	{
-		if (!(g_mem->large = alloc_zone(size + sizeof(t_alloc) + sizeof(t_zone))))
+		if (!(g_mem->large = alloc_zone(size + sizeof(t_alloc) + \
+						sizeof(t_zone))))
 			return (NULL);
 		g_mem->large_last = g_mem->large;
 	}
 	else
 	{
-		if (!(g_mem->large_last->next = alloc_zone(size + sizeof(t_alloc) + sizeof(t_zone))))
+		if (!(g_mem->large_last->next = alloc_zone(size + sizeof(t_alloc) + \
+						sizeof(t_zone))))
 			return (NULL);
 		g_mem->large_last = g_mem->large_last->next;
 	}

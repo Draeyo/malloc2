@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlistrat <vlistrat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/06 13:28:58 by vlistrat          #+#    #+#             */
+/*   Updated: 2019/05/06 13:32:28 by vlistrat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
 
-static void		free_large(void *mem)
+static void			free_large(void *mem)
 {
-	t_zone	*tmp;
-	t_zone 	*next;
+	t_zone			*tmp;
+	t_zone			*next;
 
 	tmp = g_mem->large ? g_mem->large : NULL;
 	next = NULL;
@@ -30,8 +42,8 @@ static void		free_large(void *mem)
 
 static size_t		check_no_alloc(t_alloc *mem)
 {
-	t_zone 		*zone;
-	t_alloc 	*tmp;
+	t_zone			*zone;
+	t_alloc			*tmp;
 
 	zone = mem->master;
 	tmp = zone->start;
@@ -44,10 +56,10 @@ static size_t		check_no_alloc(t_alloc *mem)
 	return (1);
 }
 
-static void 	free_zone(t_alloc *mem)
+static void			free_zone(t_alloc *mem)
 {
-	t_zone		*zone;
-	t_zone   	*tmp;
+	t_zone			*zone;
+	t_zone			*tmp;
 
 	zone = mem->master;
 	tmp = mem->size <= TINY_SIZE ? g_mem->tiny : g_mem->small;
@@ -73,20 +85,23 @@ static void 	free_zone(t_alloc *mem)
 		ft_putendl_fd("Can't unmap memory zone", 2);
 }
 
-static void 	free_normal(void *mem)
+static void			free_normal(void *mem)
 {
-	t_alloc		*tmp;
+	t_alloc			*tmp;
 
 	tmp = mem;
 	((t_zone*)tmp->master)->size += tmp->size + sizeof(t_alloc);
 	tmp->free = 1;
-	if ((((t_zone*)tmp->master)->size == align_number(TINY_ZONE_SIZE, 4096) - sizeof(t_zone) || ((t_zone*)tmp->master)->size == align_number(SMALL_ZONE_SIZE, 4096) - sizeof(t_zone)) && check_no_alloc(tmp))
+	if ((((t_zone*)tmp->master)->size == align_number(TINY_ZONE_SIZE, 4096) - \
+				sizeof(t_zone) || ((t_zone*)tmp->master)->size == \
+				align_number(SMALL_ZONE_SIZE, 4096) - sizeof(t_zone)) \
+				&& check_no_alloc(tmp))
 		free_zone(tmp);
 }
 
-void		free(void *ptr)
+void				free(void *ptr)
 {
-	void	*tmp;
+	void			*tmp;
 
 	tmp = NULL;
 	if (!ptr)

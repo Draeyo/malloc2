@@ -1,16 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   realloc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlistrat <vlistrat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/06 13:25:51 by vlistrat          #+#    #+#             */
+/*   Updated: 2019/05/06 13:26:20 by vlistrat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
-
-// static void		*resize_alloc(t_alloc *mem, size_t size)
-// {
-// 	void	*ret;
-
-// 	ret = NULL;
-// 	if ((ret = malloc(size)) == NULL)
-// 		return (NULL);
-// 	ft_memmove(ret, mem->data, mem->size);
-// 	mem->free = 1;
-// 	return (ret);
-// }
 
 static void		*re_alloc(void *ptr, size_t size)
 {
@@ -23,12 +23,7 @@ static void		*re_alloc(void *ptr, size_t size)
 		return (malloc(size));
 	tmp = find_alloc(ptr);
 	if (tmp == NULL || (tmp != NULL && tmp->free))
-	{
-		ft_putstr("ptr not found or already freed : ");
-		ft_print_mem(ptr);
-		ft_putchar('\n');
 		return (NULL);
-	}
 	if (tmp->size < size)
 	{
 		ret = malloc(size);
@@ -39,8 +34,6 @@ static void		*re_alloc(void *ptr, size_t size)
 		}
 		return (ret);
 	}
-	// join free
-	//return (resize_alloc(tmp, size));
 	return (tmp->data);
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlistrat <vlistrat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/06 13:32:43 by vlistrat          #+#    #+#             */
+/*   Updated: 2019/05/06 13:35:10 by vlistrat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
 
 static void		print_hex(unsigned long nb)
@@ -29,10 +41,8 @@ static int		print_mem(t_zone *zone, char *type)
 	while (zone)
 	{
 		ft_putstr(type);
+		ft_putstr(" : ");
 		print_memory((void*)zone);
-		ft_putstr(" -- next -> ");
-		print_memory((void*)zone->next);
-		ft_putchar('\n');
 		mem = zone ? (void*)zone + sizeof(t_zone) : NULL;
 		while (mem)
 		{
@@ -53,7 +63,7 @@ static int		print_mem(t_zone *zone, char *type)
 	return (ret_size);
 }
 
-void	show_alloc_mem(void)
+void			show_alloc_mem(void)
 {
 	int		total_size;
 
