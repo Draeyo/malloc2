@@ -6,7 +6,7 @@
 /*   By: vlistrat <vlistrat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 13:26:35 by vlistrat          #+#    #+#             */
-/*   Updated: 2019/05/06 13:28:40 by vlistrat         ###   ########.fr       */
+/*   Updated: 2019/05/06 13:51:23 by vlistrat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,6 @@ void			*find_large(void *ptr)
 	while (tmp)
 	{
 		if (((t_alloc*)tmp->start)->data == ptr)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-void			*find_last_in_zone(void *zone)
-{
-	t_alloc	*tmp;
-
-	tmp = (void*)zone + sizeof(t_zone);
-	while (tmp)
-	{
-		if (!tmp->next)
 			return (tmp);
 		tmp = tmp->next;
 	}

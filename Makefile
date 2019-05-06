@@ -7,7 +7,7 @@ NAME = libft_malloc_$(HOSTTYPE).so
 SYMLINK = libft_malloc.so
 
 SRC_FILES = malloc.c alloc_zone.c tools.c free.c calloc.c realloc.c show_alloc_mem.c align.c \
-alloc_small.c alloc_tiny.c alloc_large.c
+alloc_small.c alloc_tiny.c alloc_large.c tools2.c
 
 SRC_PATH = srcs/
 
@@ -23,7 +23,7 @@ INC = includes/
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -g -Wall -Wextra -Werror
 
 RED = \033[31;44m
 GREEN = \033[31;44m
