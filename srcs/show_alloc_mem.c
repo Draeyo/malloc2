@@ -6,7 +6,7 @@
 /*   By: vlistrat <vlistrat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 13:32:43 by vlistrat          #+#    #+#             */
-/*   Updated: 2019/05/06 13:54:49 by vlistrat         ###   ########.fr       */
+/*   Updated: 2019/05/06 14:04:23 by vlistrat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void		print_memory(void *ptr)
 	print_hex((unsigned long)ptr);
 }
 
-static void		print_each(t_alloc *mem)
+static int		print_each(t_alloc *mem, int ret_size)
 {
 	print_memory((void*)mem->data);
 	ft_putstr(" - ");
@@ -40,6 +40,7 @@ static void		print_each(t_alloc *mem)
 	ft_putnbr(mem->size);
 	ret_size += mem->size;
 	ft_putendl(" octets");
+	return (ret_size);
 }
 
 static int		print_mem(t_zone *zone, char *type)
@@ -58,7 +59,7 @@ static int		print_mem(t_zone *zone, char *type)
 		while (mem)
 		{
 			if (!mem->free)
-				print_each(mem);
+				ret_size += print_each(mem, ret_size);
 			mem = mem->next;
 		}
 		zone = zone->next;
