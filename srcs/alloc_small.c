@@ -25,7 +25,7 @@ static void		*alloc_mem_small(size_t size)
 		new = (void*)last + sizeof(t_alloc) + last->size;
 	else
 		new = (void*)last;
-	bzero(new, sizeof(t_alloc));
+	ft_bzero(new, sizeof(t_alloc));
 	new->size = size;
 	new->data = (void*)new + sizeof(t_alloc);
 	new->prev = g_mem->small_last->last ? g_mem->small_last->last : NULL;
