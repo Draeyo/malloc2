@@ -21,7 +21,9 @@ static void		*re_alloc(void *ptr, size_t size)
 	ret = NULL;
 	if (ptr == NULL)
 		return (malloc(size));
-	tmp = find_alloc(ptr);
+	if (!(tmp = find_alloc(ptr)))
+		if ((tmp = (void*)find_large(ptr)))
+			tmp = (void*)tmp + sizeof(t_zone);
 	if (tmp == NULL || (tmp != NULL && tmp->free))
 		return (NULL);
 	if (tmp->size < size)
@@ -29,8 +31,10 @@ static void		*re_alloc(void *ptr, size_t size)
 		ret = malloc(size);
 		if (ret != NULL)
 		{
-			memmove(ret, tmp->data, tmp->size);
+			ft_memmove(ret, tmp->data, tmp->size);
 			tmp->free = 1;
+			if (tmp->size > SMALL_SIZE)
+				free_large((void*)tmp - sizeof(t_zone));
 		}
 		return (ret);
 	}

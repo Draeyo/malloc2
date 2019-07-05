@@ -19,7 +19,7 @@ static void		*alloc_mem_large(size_t size)
 	if (!g_mem->large_last)
 		return (NULL);
 	new = (void*)g_mem->large_last + sizeof(t_zone);
-	bzero(new, sizeof(t_alloc));
+	ft_bzero(new, sizeof(t_alloc));
 	new->size = size;
 	new->data = (void*)new + sizeof(t_alloc);
 	new->prev = g_mem->large_last->last ? g_mem->large_last->last : NULL;

@@ -94,4 +94,6 @@ void					*find_last_in_zone(void *zone);
 
 size_t					align_number(size_t input, size_t align);
 
+void					free_large(void *mem);
+
 #endif

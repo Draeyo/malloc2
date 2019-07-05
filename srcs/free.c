@@ -12,32 +12,33 @@
 
 #include "malloc.h"
 
-static void			free_large(void *mem)
+void			free_large(void *mem)
 {
 	t_zone			*tmp;
-	t_zone			*next;
+	t_zone			*zone;
 
+	zone = mem;
 	tmp = g_mem->large ? g_mem->large : NULL;
-	next = NULL;
 	if (!tmp)
 		return ;
 	while (tmp && tmp->next)
 	{
 		if (mem == tmp->next)
 		{
-			next = tmp->next->next;
 			if (tmp->next == g_mem->large_last)
 			{
 				g_mem->large_last = tmp;
 				g_mem->large_last->last = (void*)tmp + sizeof(t_zone);
 			}
-			if (munmap(tmp->next, ((t_zone*)tmp->next)->size + sizeof(t_zone)))
-				ft_putendl_fd("Can't unmap memory zone", 2);
-			tmp->next = next;
+			tmp->next = tmp->next->next;
 			return ;
 		}
 		tmp = tmp->next;
 	}
+	if (munmap(zone, zone->size + sizeof(t_zone)))
+		ft_putendl_fd("Can't unmap memory zone", 2);
+	if (zone == g_mem->large)
+		g_mem->large = NULL;
 }
 
 static size_t		check_no_alloc(t_alloc *mem)
@@ -83,6 +84,10 @@ static void			free_zone(t_alloc *mem)
 	}
 	if (munmap(zone, zone->size + sizeof(t_zone)))
 		ft_putendl_fd("Can't unmap memory zone", 2);
+	if (zone == g_mem->tiny)
+		g_mem->tiny = NULL;
+	else if (zone == g_mem->small)
+		g_mem->small = NULL;
 }
 
 static void			free_normal(void *mem)
@@ -110,9 +115,4 @@ void				free(void *ptr)
 		free_normal(tmp);
 	else if ((tmp = find_large(ptr)))
 		free_large(tmp);
-	else
-	{
-		ft_print_mem(ptr);
-		ft_putendl_fd(" : ptr not allocated.", 2);
-	}
 }
